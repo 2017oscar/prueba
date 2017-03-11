@@ -49,6 +49,8 @@
         			echo '<dl>';
         			for ($p = 1; $p <= $hits; $p++) //recorrer los registros
 					{
+						$pos = 0;
+						
 		            	$rec = yaz_record($id[$i], $p, "xml"); //obtner en un formato especifo el registro en una posicion --siguiendo marc21
             		    if (empty($rec)) continue; /// en caso que el registro este vacio pasar al siguiente
             		    echo "<dt><b>$p</b></dt><dd>"; 
@@ -56,55 +58,70 @@
             			//echo nl2br($rec); // muestra e contenido del registro respetando salto de linea
 						//////mostrar el contenido con base en el valor del atributo tag 
 						//http://php.net/simplexmlelement.attributes   
-						//http://stackoverflow.com/questions/1256796/how-to-get-the-value-of-an-attribute-from-xml-file-in-php, 
-						
-						try{								
+						//http://stackoverflow.com/questions/1256796/how-to-get-the-value-of-an-attribute-from-xml-file-in-php, 				
+						try{						
 							$xml = new SimpleXMLElement($rec);
-							$xml2 = new SimpleXMLElement($rec);
-							//$source = $xml->datafield->attributes()->tag;
+											echo $xml;	
 							foreach($xml->datafield as $source){
-									//$casa = $source->attributes()->tag;
-									$tag = $source->attributes()->tag;
+									$pos++;
 									
+									$tag = $source->attributes()->tag;							
 								    if((string)$tag != '050' && (string)$tag != '245')
 										continue;
-									//echo $tag." \n ";
-									//echo $source->subfield;
+									echo $tag." \n ";
+									$pos2 = 0;
 									foreach($source->subfield as $source2){
+										$pos2++;
 										$code = $source2->attributes()->code;
-										//$source2 = $source2->attributes()->;
-								   		//echo $code." \n ";
-										//$source2 = '50';
-										$xml2->datafield = '550500';
-										$xml2->asXML($xml2);
-										echo $source2;
-										}
-								
-									echo "<br>";	
-							}
-							
-								foreach($xml2->datafield as $source){
-									//$casa = $source->attributes()->tag;
-									$tag = $source->attributes()->tag;
+									    echo $source2;
+										//foreach($source2->attributes() as  $a => $b) esto es para que se vea elnombre y el valor del atributo
+										
+									///$xml3=simplexml_load_file("books.xml") or die("Error: Cannot create object");
 									
-								//    if((string)$tag != '050' && (string)$tag != '245')
-								//		continue;
-									//echo $tag." \n ";
-									//echo $source->subfield;
-									foreach($source->subfield as $source2){
-										$code = $source2->attributes()->code;
-										//$source2 = $source2->attributes()->;
-								   		//echo $code." \n ";
-										//$source2 = '50';
-										//$xml2->$source2 = '50';
-										//$xml2->asXML($xml);
-										echo $source2;
+										
+										
+											//echo $a,'="',$b<br>";	
+										if((string)$code=='a')
+										{
+											echo "esto es lo nuevo   ";
+											//$xml2=$xml->asXML();
+											echo $xml->datafield[$pos+1]['tag']. "<br>";
+											echo $xml->datafield[$pos+1]->subfield['code'];
+											echo "  dentro del if vale: ".$pos."  ";
+											//////////$xml->datafield->subfield = '--  -- -- ashdlkhasdfklalsdflkad -- -- --';							
+											//$itemsList = $xml->xpath('//datafield[@tag = "050"]');
+											
+											$xml->datafield[$pos-1]->subfield[$pos2-1]=' espero que funcione';
+												
+											$xml2=$xml->asXML();
+											
+											/*foreach($gdNodes->phoneNumber as $key => $phone)
+											{
+    														$xml->subfield[$source2] = '1234567';
+											}*/
+											
+								/*			$resultado = $xml->xpath('datafield[@tag="050"]/subfield/@code');
+											while(list( , $nodo) = each($resultado)) {
+   												 echo '/a/b/c: ',$nodo,"\n";
+											}
+											
+											foreach($xml->xpath('/record/datafield') as $t)
+											{ 
+												echo " listo ";
+											    echo $t;
+											}
+										
+											$itemlist2 = $itemList[0]->subfield;
+											echo " el valor es: ".$itemList2[0]." -- ";
+											//$source2 = ' hay que cambiar el valor';
+								*/						
 										}
-								
-									echo "<br>";	
+  // $itemsList[0]->age->attributes()->years = 26;  -http://stackoverflow.com/questions/11103445/access-and-update-attribute-value-in-xml-using-xpath-and-php
+									}					
+									echo "<br>";
 							}
-							
-							//$xml->saveXML();
+			
+							echo nl2br($xml2);
 						}
 						catch(Exception $e)
 						{

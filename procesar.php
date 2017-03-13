@@ -10,6 +10,7 @@
     	      	echo 'You searched for ' . htmlspecialchars($query) . '<br />';
 				echo 'En el servidor ' . htmlspecialchars($host) . '<br />';
 				echo 'numero de servidores  ' .$num_hosts. '<br />';
+				echo '@attr 1=4 ' .'"'. $query .'"'. '<br />';
     	   //  	for ($i = 0; $i < $num_hosts; $i++) //numero de colecciones donde se realizo la busqueda
 		///		{
 					echo $host."aasdsafasf";
@@ -17,7 +18,7 @@
 		        	yaz_syntax($id, "xml"); //especifica el formato que se prefiere obtener --xml
 		        	yaz_range($id, 1, 10);//especifica el numero minimo y maximo de registros que se quiere obtener
 	 				//yaz_search($id[$i], "rpn", '@attr 1=7 "9971506653"');  /// hace la busqueda, se puede hacer con base al autor(), isbn(7), titulo(4),etc -bib-1    				 						//yaz_search($id[$i], "rpn", '@attr 1=4 ' .'"'. $query .'"');// query = Computer Recognition and Human Production of Handwriting
-					yaz_search($id, "rpn", '@attr 1=7 ' .'"'. $query .'"'); 
+					yaz_search($id, "rpn", '@attr 1=4 ' .'"'. $query .'"'); 
     			//}
     			yaz_wait(); // tiempo de espera para obtener los registros
     			for ($i = 0; $i < $num_hosts; $i++)
@@ -115,6 +116,7 @@
 						}
 					}
 				}
+				yaz_close($id);
 					echo "</dd>";
   	        
         		echo '</dl>';

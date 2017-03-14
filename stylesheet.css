@@ -11,3 +11,18 @@ p {
     font-family: arial;
     font-size: 20px;
 }
+
+p .dos{
+    font-family: arial;
+    font-size: 25px;
+}
+
+input[type="text"]
+{
+     font-family: verdana;
+    font-size:20px;
+}
+form{
+margin-left: 35%;
+width: 80%;
+}

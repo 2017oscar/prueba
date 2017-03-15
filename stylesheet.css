@@ -12,9 +12,9 @@ p {
     font-size: 20px;
 }
 
-p .dos{
-    font-family: arial;
-    font-size: 25px;
+p.dos{
+    font-family: verdana;
+    font-size: 15px;
 }
 
 input[type="text"]

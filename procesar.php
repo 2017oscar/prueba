@@ -17,13 +17,13 @@
 	{
 		$query=	htmlspecialchars($_POST['titulo']);
 		$val = 4;
-		echo '@attr 1='.$val.' "'. $query .'"';
+		//echo '@attr 1='.$val.' "'. $query .'"';
 	}
 	else if (!empty($_POST['isbn']))
 	{
 		$query=	htmlspecialchars($_POST['isbn']);
 		$val = 7;
-		echo '@attr 1='.$val.' "'. $query .'"';
+		//echo '@attr 1='.$val.' "'. $query .'"';
 	}
 	yaz_search($id, "rpn", '@attr 1='.$val.' "'. $query .'"'); 
     yaz_wait(); // tiempo de espera para obtener los registros
@@ -39,7 +39,7 @@
     else 
 	{
     	$hits = yaz_hits($id); //numero de resultados obtenidos por host
-        echo "Result Count $hits"; 
+       // echo "Result Count $hits"; 
         echo '<dl>';
 	
         for ($p = 1; $p <= $hits; $p++) //recorrer los registros
@@ -48,7 +48,7 @@
 			$rec = yaz_record($id, $p, "xml"); //obtner en un formato especifo el registro en una posicion --siguiendo marc21
             if (empty($rec)) 
 				continue; /// en caso que el registro este vacio pasar al siguiente
-            echo "<dt><b>$p</b></dt><dd>"; 
+            //echo "<dt><b>$p</b></dt><dd>"; 
 			//echo $rec; //muesra todo el contenido de la consulta, sin respetar salto de linea
             //echo nl2br($rec); // muestra e contenido del registro respetando salto de linea
 			//////mostrar el contenido con base en el valor del atributo tag 
@@ -114,7 +114,7 @@
 						}*/
  						 // $itemsList[0]->age->attributes()->years = 26;  // cambiar el valor de un atributo-http://stackoverflow.com/questions/11103445/access-and-update-attribute-value-in-xml-using-xpath-and-php
 					}					
-					echo "<br>";
+					//echo "<br>";
 				}
 				//echo nl2br($xml2); //mostrar el xml
 			}
@@ -127,17 +127,34 @@
 		$distribuidior = preg_replace('/,/',"", $distribuidior) ;	
 		//$fpublicacion = preg_replace(".","", $fpublicacion) ;	
 			//echo preg_replace($patrones, $sustituciones, $cadena);
-		echo "<p class = 'dos' > Autor(es): ".$autor."</p><br>";
-		echo "<p class = 'dos' >  Título: ".$titulo."</p><br>";
-		echo "<p class = 'dos' >  Editorial: ".$distribuidior."</p><br>";
-    	echo "<p class = 'dos' >  Fecha de publicación: ".$fpublicacion ."</p><br>";
-		echo "<p class = 'dos' >  Código: ".$codigo."</p><br>";
-		
-		$titulo = "";
+			
+		echo"<HEAD>";
+			echo "<link rel='STYLESHEET' type='text/css' href='stylesheet.css'> ";
+		echo"<TITLE>Categorizacion de libros</TITLE>";
+		echo"</HEAD>";
+		echo"<BODY>";
+		echo"<H1>Asignacion de codigo</H1>";
+			
+		echo "<form action='codigoagregado.php' method='post'>";
+			echo "<p class = 'dos' > Autor(es): ".$autor."</p>";
+			echo "<p class = 'dos' >  Título: ".$titulo."</p>";
+			echo "<p class = 'dos' >  Editorial: ".$distribuidior."</p>";
+    		echo "<p class = 'dos' >  Fecha de publicación: ".$fpublicacion ."</p>";
+			//echo "<p class = 'dos' >  Código: <imput type = 'text' name = 'codigo' value = ".$codigo."/></p><br>";
+			echo "<p class = 'dos' >  Código: <input type='text' name ='codigo2' value= '".$codigo."'>";
+			echo " <input type='hidden' name ='autor2' value= '".$autor."'>";
+			echo " <input type='hidden' name ='titulo2' value= '".$titulo."'>";
+			echo " <input type='hidden' name ='editorial' value= '".$distribuidior."'>";
+			echo " <input type='hidden' name ='fechapublicaicon' value= '".$fpublicacion."'>";
+			echo "<p><input type='submit' value='agregar' /></p>";
+		echo"</BODY>";
+
+			
+	/*	$titulo = "";
 		$autor="no definido";
 		$codigo = "sin definir";
 		$distribuidior = "";
-    	$fpublicacion = "";
+    	$fpublicacion = "";*/
 		}
 	}
 	yaz_close($id);
